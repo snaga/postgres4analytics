@@ -1,0 +1,13 @@
+FROM postgres
+MAINTAINER Satoshi Nagayasu <snaga@uptime.jp>
+
+# Installing Apache MADlib
+ADD madlib.tar.gz /usr/local
+
+RUN set -ex && \
+  yum install -y m4 which && \
+  su -c "pg_ctl -D /var/lib/pgsql/10/data start" postgres && \
+  createdb -U postgres template2 && \
+  echo postgres | /usr/local/madlib/bin/madpack -s madlib -p postgres -c postgres@127.0.0.1:5432/template2 install && \
+  echo postgres | /usr/local/madlib/bin/madpack -s madlib -p postgres -c postgres@127.0.0.1:5432/template2 install-check && \
+  su -c "pg_ctl -D /var/lib/pgsql/10/data stop" postgres

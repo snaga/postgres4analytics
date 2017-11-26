@@ -1,0 +1,20 @@
+*** SQLCommon.m4.bak    Sat Nov 25 06:55:05 2017
+--- SQLCommon.m4        Sat Nov 25 06:54:57 2017
+***************
+*** 12,18 ****
+  m4_define(`__DBMS_VERSION_MAJOR__', `10')
+  m4_define(`__DBMS_VERSION_MINOR__', `0')
+  m4_define(`__DBMS_VERSION_PATCH__', `1')
+! __DBMS_ARCHITECTURE__=
+  m4_define(`__MADLIB_VERSION__', `1.13-dev')
+  m4_define(`__MADLIB_VERSION_MAJOR__', `1')
+  m4_define(`__MADLIB_VERSION_MINOR__', `13')
+--- 12,18 ----
+  m4_define(`__DBMS_VERSION_MAJOR__', `10')
+  m4_define(`__DBMS_VERSION_MINOR__', `0')
+  m4_define(`__DBMS_VERSION_PATCH__', `1')
+! m4_define(`__DBMS_ARCHITECTURE__', `postgres')
+  m4_define(`__MADLIB_VERSION__', `1.13-dev')
+  m4_define(`__MADLIB_VERSION_MAJOR__', `1')
+  m4_define(`__MADLIB_VERSION_MINOR__', `13')
+

@@ -1,0 +1,22 @@
+FROM postgres
+MAINTAINER Satoshi Nagayasu <snaga@uptime.jp>
+
+# Building Apache MADlib
+RUN set -ex && \
+  yum install -y cmake gcc-c++ m4 make unzip patch which
+
+RUN set -ex && \
+  cd /tmp && \
+  curl -O https://codeload.github.com/apache/madlib/zip/master && \
+  unzip master && \
+  cd madlib-master && \
+  ./configure && \
+  cd build && \
+  make && \
+  make install
+
+ADD SQLCommon.m4.diff /tmp
+
+RUN set -ex && \
+  cd /usr/local/madlib/Versions/1.13-dev/ports/postgres/10/madpack && \
+  patch -p0 < /tmp/SQLCommon.m4.diff
