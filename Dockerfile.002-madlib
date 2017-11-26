@@ -1,0 +1,7 @@
+FROM postgres-plr
+MAINTAINER Satoshi Nagayasu <snaga@uptime.jp>
+
+USER root
+
+# Installing Apache MADlib
+ADD dist/madlib.tar.gz /usr/local
