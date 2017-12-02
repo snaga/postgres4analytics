@@ -1,0 +1,16 @@
+FROM postgres-madlib
+MAINTAINER Satoshi Nagayasu <snaga@uptime.jp>
+
+# pg_bigm
+RUN set -ex && \
+  rpm -qa | sort > pg_bigm_1.log && \
+  yum install -y gcc make && \
+  curl -O -L 'https://ja.osdn.net/frs/redir.php?m=ymu&f=pgbigm%2F66565%2Fpg_bigm-1.2-20161011.tar.gz' && \
+  mv 'redir.php?m=ymu&f=pgbigm%2F66565%2Fpg_bigm-1.2-20161011.tar.gz' pg_bigm-1.2-20161011.tar.gz && \
+  tar zxvf pg_bigm-1.2-20161011.tar.gz && \
+  pushd pg_bigm-1.2-20161011 && \
+  env USE_PGXS=1 make install && \
+  popd && \
+  rm -rf pg_bigm-1.2-20161011.tar.gz pg_bigm-1.2-20161011 && \
+  rpm -qa | sort > pg_bigm_2.log && \
+  rpm -e gcc cpp glibc-devel glibc-headers kernel-headers libmpc mpfr

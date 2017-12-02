@@ -1,0 +1,11 @@
+FROM postgres-pgbigm
+MAINTAINER Satoshi Nagayasu <snaga@uptime.jp>
+
+# Python
+RUN set -ex && \
+  curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py && \
+  python get-pip.py && \
+  rm get-pip.py && \
+  yum install -y gcc make python-devel && \
+  pip install numpy scipy scikit-learn pandas matplotlib && \
+  rpm -e gcc cpp glibc-devel glibc-headers kernel-headers libmpc mpfr python-devel
