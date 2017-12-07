@@ -3,5 +3,25 @@ MAINTAINER Satoshi Nagayasu <snaga@uptime.jp>
 
 USER root
 
+#ADD dist/madlib.tar.gz /usr/local
+
 # Installing Apache MADlib
-ADD dist/madlib.tar.gz /usr/local
+#ADD CMakeLists.txt.diff /tmp
+ADD SQLCommon.m4.diff /tmp
+
+WORKDIR /tmp
+RUN yum install -y cmake gcc gcc-c++ m4 patch && \
+  curl -O https://codeload.github.com/apache/madlib/zip/master && \
+  unzip master && \
+  pushd madlib-master && \
+    ./configure && \
+    pushd build && \
+      make && \
+      make install && \
+    popd && \
+  popd && \
+  pushd /usr/local/madlib/Versions/1.13-dev/ports/postgres/10/madpack && \
+    patch -p0 < /tmp/SQLCommon.m4.diff && \
+  popd && \
+  rm -rf madlib-master && \
+  rpm -e cmake gcc gcc-c++ m4 patch cpp glibc-devel glibc-headers kernel-headers libarchive libmpc libstdc++-devel lzo mpfr
